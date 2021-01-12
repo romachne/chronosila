@@ -1,116 +1,141 @@
 import React, {Component} from "react";
 import ReactApexChart from "react-apexcharts";
-import {history} from "../../utils/history";
 
 interface ApexChartState {
   options: any;
   series: any;
 }
 
-let series =  [
+interface ApexChartProps {
+
+}
+
+let data = [
+  // George Washington
   {
-    name: 'Микенский период',
+    name: 'George Washington',
     data: [
       {
-        x: '',
+        x: 'President',
         y: [
-          -3500,
-          -2800
+          new Date(-400, 3, 30).getTime(),
+          new Date(-200, 2, 4).getTime()
+        ]
+      },
+    ]
+  },
+  // John Adams
+  {
+    name: 'John Adams',
+    data: [
+      {
+        x: 'President',
+        y: [
+          new Date(-200, 2, 4).getTime(),
+          new Date(200, 2, 4).getTime()
         ]
       }
     ]
   },
+  // Thomas Jefferson
   {
-    name: 'Хассуна',
+    name: 'Thomas Jefferson',
     data: [
       {
-        x: '',
+        x: 'Vice President',
         y: [
-          -6000,
-          -5000
+          new Date(105, 2, 4).getTime(),
+          new Date(300, 2, 4).getTime()
+        ]
+      },
+      {
+        x: 'Secretary of State',
+        y: [
+          new Date(200, 2, 22).getTime(),
+          new Date(400, 11, 31).getTime()
         ]
       }
     ]
   },
+  // Aaron Burr
   {
-    name: 'Убейд',
+    name: 'Aaron Burr',
     data: [
       {
-        x: '',
+        x: 'Vice President',
         y: [
-          -5900,
-          -4300
+          new Date(-200, 2, 4).getTime(),
+          new Date(-105, 2, 4).getTime()
+        ]
+      }
+    ]
+  },
+  // George Clinton
+  {
+    name: 'George Clinton',
+    data: [
+      {
+        x: 'Vice President',
+        y: [
+          new Date(-105, 2, 4).getTime(),
+          new Date(105, 3, 20).getTime()
         ]
       }
     ]
   }
 ];
 
-interface ApexChartProps {
-
-}
-
 export default class ApexChart extends Component<ApexChartProps, ApexChartState> {
-  constructor(props: ApexChartProps | Readonly<ApexChartProps>) {
+  constructor(props: any) {
     super(props);
 
     this.state = {
 
-      series: series,
+      series: data,
       options: {
         chart: {
-          background: '#fff',
           height: 350,
-          type: 'rangeBar',
-          fontFamily: 'Helvetica, Arial, sans-serif',
-          events: {
-            animationEnd: undefined,
-            beforeMount: undefined,
-            mounted: undefined,
-            updated: undefined,
-            click: function () {history.push('./article')},
-            mouseMove: undefined,
-            legendClick: undefined,
-            markerClick: undefined,
-            selection: undefined,
-            dataPointSelection: undefined,
-            dataPointMouseEnter: undefined,
-            dataPointMouseLeave: undefined,
-            beforeZoom: undefined,
-            beforeResetZoom: undefined,
-            zoomed: undefined,
-            scrolled: undefined
-          },
-
+          type: 'rangeBar'
         },
         plotOptions: {
           bar: {
-            horizontal: true
+            horizontal: true,
+            barHeight: '50%',
+            rangeBarGroupRows: true
           }
         },
+        colors: [
+          "#008FFB", "#00E396", "#FEB019", "#FF4560", "#775DD0",
+          "#3F51B5", "#546E7A", "#D4526E", "#8D5B4C", "#F86624",
+          "#D7263D", "#1B998B", "#2E294E", "#F46036", "#E2C044"
+        ],
         fill: {
-          type: 'gradient',
-          gradient: {
-            shade: 'light',
-            type: 'vertical',
-            shadeIntensity: 0.25,
-            gradientToColors: undefined,
-            inverseColors: true,
-            opacityFrom: 1,
-            opacityTo: 1,
-            stops: [50, 0, 100, 100]
-          }
+          type: 'solid'
         },
         xaxis: {
           labels: {
-            format: 'yyyy/dd/MM',
+            formatter: function(value: any, timestamp: any, opts: any) {
+              return new Date(value).getFullYear().toString()
+            }
           }
         },
         yaxis: {
-          show: false
+          labels: {
+            formatter: function(value: any, index: any) {
+              return value
+            }
+          }
         },
-        legend: {
-          position: 'top'
+        tooltip: {
+          custom: function(opts: any) {
+            // const fromYear = new Date(opts.y1).getFullYear()
+            // const toYear = new Date(opts.y2).getFullYear()
+            // const values = opts.ctx.rangeBar.getTooltipValues(opts)
+
+            return (
+              ''
+            )
+          }
         }
       },
 
