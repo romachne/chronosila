@@ -11,7 +11,6 @@ interface ApexChartProps {
 }
 
 let data = [
-  // George Washington
   {
     name: 'George Washington',
     data: [
@@ -24,7 +23,6 @@ let data = [
       },
     ]
   },
-  // John Adams
   {
     name: 'John Adams',
     data: [
@@ -32,7 +30,7 @@ let data = [
         x: 'President',
         y: [
           new Date(-200, 2, 4).getTime(),
-          new Date(200, 2, 4).getTime()
+          new Date(104, 2, 4).getTime()
         ]
       }
     ]
@@ -65,7 +63,7 @@ let data = [
         x: 'Vice President',
         y: [
           new Date(-200, 2, 4).getTime(),
-          new Date(-105, 2, 4).getTime()
+          new Date(-103, 2, 4).getTime()
         ]
       }
     ]
@@ -113,27 +111,21 @@ export default class ApexChart extends Component<ApexChartProps, ApexChartState>
           type: 'solid'
         },
         xaxis: {
+          type: 'datetime',
           labels: {
             formatter: function(value: any, timestamp: any, opts: any) {
               return new Date(value).getFullYear().toString()
             }
           }
         },
-        yaxis: {
-          labels: {
-            formatter: function(value: any, index: any) {
-              return value
-            }
-          }
-        },
         tooltip: {
           custom: function(opts: any) {
-            // const fromYear = new Date(opts.y1).getFullYear()
-            // const toYear = new Date(opts.y2).getFullYear()
-            // const values = opts.ctx.rangeBar.getTooltipValues(opts)
+            const fromYear = new Date(opts.y1).getFullYear()
+            const toYear = new Date(opts.y2).getFullYear()
+            const values = opts.ctx.rangeBar.getTooltipValues(opts)
 
             return (
-              ''
+              fromYear + ' ' + toYear
             )
           }
         }
@@ -145,13 +137,8 @@ export default class ApexChart extends Component<ApexChartProps, ApexChartState>
 
   render() {
     return (
-      <div className="app">
-        <div className="row">
-          <div className="mixed-chart">
-            <ReactApexChart options={this.state.options} series={this.state.series} type="rangeBar"
-                            height={350}/>
-          </div>
-        </div>
+      <div id="chart">
+        <ReactApexChart options={this.state.options} series={this.state.series} type="rangeBar" height={350} />
       </div>
     );
   }
