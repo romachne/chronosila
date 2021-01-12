@@ -12,72 +12,74 @@ interface ApexChartProps {
 
 let data = [
   {
-    name: 'George Washington',
     data: [
       {
-        x: 'President',
+        x: '1',
         y: [
-          new Date(-400, 3, 30).getTime(),
-          new Date(-200, 2, 4).getTime()
-        ]
+          new Date(-7500, 1, 1).getTime(),
+          new Date(-6000, 1, 1).getTime()
+        ],
+        name: 'Докерамический неолит'
       },
     ]
   },
   {
-    name: 'John Adams',
     data: [
       {
-        x: 'President',
+        x: '1',
         y: [
-          new Date(-200, 2, 4).getTime(),
-          new Date(104, 2, 4).getTime()
-        ]
+          new Date(-6000, 1, 1).getTime(),
+          new Date(-3000, 1, 1).getTime()
+        ],
+        name: 'Неолит'
       }
     ]
   },
-  // Thomas Jefferson
   {
-    name: 'Thomas Jefferson',
     data: [
       {
-        x: 'Vice President',
+        x: '1',
         y: [
-          new Date(105, 2, 4).getTime(),
-          new Date(300, 2, 4).getTime()
-        ]
+          new Date(-3000, 1, 1).getTime(),
+          new Date(-2300, 1, 1).getTime()
+        ],
+        name: 'ЦМП-I'
       },
+    ]
+  },
+  {
+    data: [
       {
-        x: 'Secretary of State',
+        x: '1',
         y: [
-          new Date(200, 2, 22).getTime(),
-          new Date(400, 11, 31).getTime()
-        ]
+          new Date(-2300, 1, 1).getTime(),
+          new Date(-1700, 1, 1).getTime()
+        ],
+        name: 'ЦМП-II'
       }
     ]
   },
-  // Aaron Burr
   {
-    name: 'Aaron Burr',
     data: [
       {
-        x: 'Vice President',
+        x: '2',
         y: [
-          new Date(-200, 2, 4).getTime(),
-          new Date(-103, 2, 4).getTime()
-        ]
+          new Date(-5900, 1, 1).getTime(),
+          new Date(-4300, 1, 1).getTime()
+        ],
+        name: 'Убейд'
       }
     ]
   },
-  // George Clinton
   {
-    name: 'George Clinton',
     data: [
       {
-        x: 'Vice President',
+        x: '3',
         y: [
-          new Date(-105, 2, 4).getTime(),
-          new Date(105, 3, 20).getTime()
-        ]
+          new Date(-6000, 1, 1).getTime(),
+          new Date(-5000, 1, 1).getTime()
+        ],
+        name: 'Хассуна'
       }
     ]
   }
@@ -95,13 +97,6 @@ export default class ApexChart extends Component<ApexChartProps, ApexChartState>
           height: 350,
           type: 'rangeBar'
         },
-        plotOptions: {
-          bar: {
-            horizontal: true,
-            barHeight: '50%',
-            rangeBarGroupRows: true
-          }
-        },
         colors: [
           "#008FFB", "#00E396", "#FEB019", "#FF4560", "#775DD0",
           "#3F51B5", "#546E7A", "#D4526E", "#8D5B4C", "#F86624",
@@ -109,6 +104,60 @@ export default class ApexChart extends Component<ApexChartProps, ApexChartState>
         ],
         fill: {
           type: 'solid'
+        },
+        plotOptions: {
+          bar: {
+            horizontal: true,
+            barHeight: '75%',
+            rangeBarGroupRows: true,
+            dataLabels: {
+              hideOverflowingLabels: true,
+              orientation: 'horizontal'
+            }
+          }
+        },
+
+        dataLabels: {
+          enabled: true,
+          enabledOnSeries: undefined,
+          formatter: function (val: any, opts: any) {
+            return val
+          },
+          textAnchor: 'middle',
+          distributed: false,
+          offsetX: 0,
+          offsetY: 0,
+          style: {
+            fontSize: '14px',
+            fontFamily: 'Helvetica, Arial, sans-serif',
+            fontWeight: 'bold',
+            colors: undefined
+          },
+          background: {
+            enabled: true,
+            foreColor: '#fff',
+            padding: 4,
+            borderRadius: 2,
+            borderWidth: 1,
+            borderColor: '#fff',
+            opacity: 0.9,
+            dropShadow: {
+              enabled: false,
+              top: 1,
+              left: 1,
+              blur: 1,
+              color: '#000',
+              opacity: 0.45
+            }
+          },
+          dropShadow: {
+            enabled: false,
+            top: 1,
+            left: 1,
+            blur: 1,
+            color: '#000',
+            opacity: 0.45
+          }
         },
         xaxis: {
           type: 'datetime',
@@ -118,12 +167,13 @@ export default class ApexChart extends Component<ApexChartProps, ApexChartState>
             }
           }
         },
+        yaxis: {
+          show: false,
+        },
         tooltip: {
           custom: function(opts: any) {
             const fromYear = new Date(opts.y1).getFullYear()
             const toYear = new Date(opts.y2).getFullYear()
-            const values = opts.ctx.rangeBar.getTooltipValues(opts)
-
             return (
               fromYear + ' ' + toYear
             )
