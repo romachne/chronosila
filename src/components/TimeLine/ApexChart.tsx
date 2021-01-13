@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import ReactApexChart from "react-apexcharts";
+import {history} from "../../utils/history";
 
 interface ApexChartState {
   options: any;
@@ -12,74 +13,74 @@ interface ApexChartProps {
 
 let data = [
   {
+    name: 'Докерамический неолит',
     data: [
       {
         x: '1',
         y: [
           new Date(-7500, 1, 1).getTime(),
           new Date(-6000, 1, 1).getTime()
-        ],
-        name: 'Докерамический неолит'
+        ]
       },
     ]
   },
   {
+    name: 'Неолит',
     data: [
       {
         x: '1',
         y: [
           new Date(-6000, 1, 1).getTime(),
           new Date(-3000, 1, 1).getTime()
-        ],
-        name: 'Неолит'
+        ]
       }
     ]
   },
   {
+    name: 'ЦМП-I',
     data: [
       {
         x: '1',
         y: [
           new Date(-3000, 1, 1).getTime(),
           new Date(-2300, 1, 1).getTime()
-        ],
-        name: 'ЦМП-I'
+        ]
       },
     ]
   },
   {
+    name: 'ЦМП-II',
     data: [
       {
         x: '1',
         y: [
           new Date(-2300, 1, 1).getTime(),
           new Date(-1700, 1, 1).getTime()
-        ],
-        name: 'ЦМП-II'
+        ]
       }
     ]
   },
   {
+    name: 'Убейд',
     data: [
       {
         x: '2',
         y: [
           new Date(-5900, 1, 1).getTime(),
           new Date(-4300, 1, 1).getTime()
-        ],
-        name: 'Убейд'
+        ]
       }
     ]
   },
   {
+    name: 'Хассуна',
     data: [
       {
         x: '3',
         y: [
           new Date(-6000, 1, 1).getTime(),
           new Date(-5000, 1, 1).getTime()
-        ],
-        name: 'Хассуна'
+        ]
       }
     ]
   }
@@ -95,7 +96,16 @@ export default class ApexChart extends Component<ApexChartProps, ApexChartState>
       options: {
         chart: {
           height: 350,
-          type: 'rangeBar'
+          type: 'rangeBar',
+          events: {
+            click: function(event: any, chartContext: any, config: any) {
+              // The last parameter config contains additional information like `seriesIndex` and `dataPointIndex` for cartesian charts
+              console.log(config.seriesIndex);
+              if (config.seriesIndex != -1) {
+                history.push('./article')
+              }
+            }
+          }
         },
         colors: [
           "#008FFB", "#00E396", "#FEB019", "#FF4560", "#775DD0",
@@ -121,7 +131,7 @@ export default class ApexChart extends Component<ApexChartProps, ApexChartState>
           enabled: true,
           enabledOnSeries: undefined,
           formatter: function (val: any, opts: any) {
-            return val
+            return '123'
           },
           textAnchor: 'middle',
           distributed: false,
@@ -170,15 +180,15 @@ export default class ApexChart extends Component<ApexChartProps, ApexChartState>
         yaxis: {
           show: false,
         },
-        tooltip: {
-          custom: function(opts: any) {
-            const fromYear = new Date(opts.y1).getFullYear()
-            const toYear = new Date(opts.y2).getFullYear()
-            return (
-              fromYear + ' ' + toYear
-            )
-          }
-        }
+        // tooltip: {
+        //   custom: function(opts: any) {
+        //     const fromYear = new Date(opts.y1).getFullYear()
+        //     const toYear = new Date(opts.y2).getFullYear()
+        //     return (
+        //       fromYear + ' ' + toYear
+        //     )
+        //   }
+        // }
       },
 
 
